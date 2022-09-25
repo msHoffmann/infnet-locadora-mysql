@@ -1,5 +1,3 @@
-* PUT = edita tudo x PATCH  = edita parte de um especifico
-
 * app.js s
 entry point of app. launch the server
 
@@ -30,6 +28,7 @@ delete
 * Express
 handle those crud's operations by the methods GET, POST, PUT and DELETE
 
+
 - GET
 retrieve the existing data from the database
 
@@ -38,6 +37,8 @@ write new data into the database. its common to include a JSON payload
 
 - PUT
 update data in the database. its common to include a JSON payload
+
+(PUT = edita tudo de um dado x PATCH  = edita parte de um dado)
 
 - DELETE
 remove an existing row or document from the database
@@ -51,3 +52,5 @@ keys:
 
 primary key: 
 
+* PARANOID (propriedade do Sequelize)
+quando o modelo é paranoid, trabalhamos com soft deletion
