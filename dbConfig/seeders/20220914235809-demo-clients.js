@@ -10,19 +10,25 @@ module.exports = {
       "Clients",
       [
         {
-          nome: "Michel Baes",
+          name: "Michel Baes",
           email: "mbaes@baes.com",
-          aluguel: "Titanic",
+          rent: "Titanic",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          nome: "Emilia Lopes",
+          name: "Emilia Lopes",
           email: "emilia@lopes.com",
-          aluguel: "Jaws",
+          rent: "Jaws",
           createdAt: new Date(),
           updatedAt: new Date()
-        },
+        }, 
+        {
+          name: "Frania Hoffmann",
+          email: "frania@hoffmann.com",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },  
       ]
     )
   },

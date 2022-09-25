@@ -2,16 +2,17 @@ const database = require("../../../dbConfig/db/models");
 
 class MoviesController {
   
-  static async getAll(req, res) {
+  static async getAllMovie(req, res) {
     try {
       const allMovies = await database.Movies.findAll();
+      // FAZER FILTRO POR GENERO!!!!
       return res.status(200).send(allMovies);
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
-
-  static async getOne(req, res) {
+  
+  static async getOneMovie(req, res) {
     const { movieId } = req.params;
     try {
       const movie = await database.Movies.findOne({
@@ -21,7 +22,7 @@ class MoviesController {
       });
 
       if (!movie) {
-        return res.status(404).send("O filme não existe. Tente outro id. não existe, tente outro id");
+        return res.status(404).send("O filme não existe. Tente outro id.");
       }
 
       return res.status(200).send(movie);
