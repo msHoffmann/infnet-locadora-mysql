@@ -18,3 +18,4 @@ route.patch(
 // route.delete("/rent/:rent_id/", rentsController.deleteRent);    
 
 module.exports = route;
+

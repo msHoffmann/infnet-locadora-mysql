@@ -1,4 +1,5 @@
 const database = require("../../../dbConfig/db/models");
+const { MissingEmailExecption } = require("../../common/exceptions");
 
 class ClientsController {
   
@@ -24,14 +25,17 @@ class ClientsController {
         return res.status(404).send("O cliente não existe. Tente outro id.");
       }
 
-      return res.status(200).send(client);
+      return res.status(200).send(oneClient);
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
 
   static async createClient(req, res) {
-    const { name, email, rent} = req.body;
+    const { name, email } = req.body;
+    const isEmail = validator.isEmail(email);
+    if(!isEmail) throw new MissingEmailExecption();
+
     try {
       const verifyingClient = await database.Clients.findOne({
         where: {
@@ -45,7 +49,6 @@ class ClientsController {
       const client = await database.Clients.create({
         name,
         email,
-        rent
       });
       return res
         .status(200)
@@ -56,18 +59,18 @@ class ClientsController {
   }
 
   static async editClient(req, res) {
-    const { clientId } = req.params;
+    const { client_id } = req.params;
     const newClient = req.body;
     try {
       await database.Clients.update(newClient, {
         where: {
-          id: Number(clientId)
+          id: Number(client_id)
         }
       });
 
       const updatedClient = await database.Clients.findOne({
         where: {
-          id: Number(clientId)
+          id: Number(client_id)
         }
       });
       return res
@@ -79,11 +82,11 @@ class ClientsController {
   }
 
   static async deleteClient(req, res) {
-    const { clientId } = req.params;
+    const { client_id } = req.params;
     try {
       await database.Movies.destroy({
         where: {
-          id: Number(clientId)
+          id: Number(client_id)
         }
       });
       return res.status(200).send("Cliente deletado com sucesso!");

@@ -6,7 +6,7 @@ class RentsController {
     };
 
     static async getAllRents(req, res) {
-        const movieId = req.query.movie_id
+        const rentId = req.params.rent_id
         // exemplo no postman = /rents/?movie_id=2
         // filtrar por filme especifico
         const where = {}
@@ -23,5 +23,14 @@ class RentsController {
         }
       }
 }
+
+// EXEMPLO
+// where: {
+//   id: 1, 2, 3
+// },
+// order:[
+//   ['id', 'DESC'],
+//   ['name', 'ASC']
+// ]
 
 module.exports = RentsController;

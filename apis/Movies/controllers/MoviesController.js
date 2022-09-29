@@ -13,11 +13,11 @@ class MoviesController {
   }
   
   static async getOneMovie(req, res) {
-    const { movieId } = req.params;
+    const { movie_id } = req.params;
     try {
       const movie = await database.Movies.findOne({
         where: {
-          id: Number(movieId)
+          id: Number(movie_id)
         }
       });
 
@@ -58,12 +58,12 @@ class MoviesController {
   }
 
   static async editMovie(req, res) {
-    const { movieId } = req.params;
+    const { movie_id  } = req.params;
     const newMovie = req.body;
     try {
       await database.Movies.update(newMovie, {
         where: {
-          id: Number(movieId)
+          id: Number(movie_id)
         }
       });
 
@@ -81,14 +81,28 @@ class MoviesController {
   }
 
   static async deleteMovie(req, res) {
-    const { movieId } = req.params;
+    const { movie_id  } = req.params;
     try {
       await database.Movies.destroy({
         where: {
-          id: Number(movieId)
+          id: Number(movie_id)
         }
       });
       return res.status(200).send("Filme deletado com sucesso!");
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  }
+
+  static async restoreMovie(req, res) {
+    const { movie_id  } = req.params;
+    try {
+      await database.Movies.restore({
+        where: {
+          id: Number(movie_id)
+        }
+      });
+      return res.status(200).send("Filme recuperado com sucesso!");
     } catch (error) {
       return res.status(500).send(error.message);
     }

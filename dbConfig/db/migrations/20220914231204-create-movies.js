@@ -15,17 +15,17 @@ module.exports = {
         type: Sequelize.STRING
       },
       year: {
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER
       },
       genre: {
         type: Sequelize.STRING
       },
       createdAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
     });

@@ -7,7 +7,6 @@ module.exports = {
       [
         {
           status: "Alugado!",
-          rent_id: 1,
           movie_id: 1,
           client_id: 1,
           createdAt: new Date(),
@@ -15,7 +14,6 @@ module.exports = {
         },
         {
           status: "Alugado!",
-          rent_id: 2,
           movie_id: 2,
           client_id: 2,
           createdAt: new Date(),
@@ -23,7 +21,6 @@ module.exports = {
         },
         {
           status: "Alugado!",
-          rent_id: 3,
           movie_id: 3,
           client_id: 3,
           createdAt: new Date(),

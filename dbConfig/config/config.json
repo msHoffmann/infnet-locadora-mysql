@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "Fr101190!",
-    "database": "Locadora de Filmes",
+    "database": "locadora",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

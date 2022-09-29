@@ -2,11 +2,6 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     **/
      await queryInterface.bulkInsert(
       "Movies",
       [
@@ -17,16 +12,14 @@ module.exports = {
           genre: "Thriller, Horror",
           createdAt: new Date(),
           updatedAt: new Date(),
-          rent: Boolean
         },
         {
           title: "Titanic",
           year: "1997",
-          description: "Jaws is a 1975 American thriller film directed by Steven Spielberg, based on the 1974 novel by Peter BenTitanic is a 1997 American epic romance and disaster film directed, written, produced, and co-edited by James Cameron.chley.",
+          description: "Titanic is a 1997 American epic romance and disaster film directed, written, produced, and co-edited by James Cameron.",
           genre: "Romance, Disaster, Drama, Historical Drama",
           createdAt: new Date(),
           updatedAt: new Date(),
-          rent: Boolean
         },
         {
           title: "The Lion King",
@@ -35,7 +28,6 @@ module.exports = {
           genre: "Disney, Musical, Children",
           createdAt: new Date(),
           updatedAt: new Date(),
-          role: Boolean
         },
       ]
     )

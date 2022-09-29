@@ -10,10 +10,3 @@ routes(app);
 
 app.listen(PORT, () => console.log(`O servidor está rodando na porta ${PORT}`));
 
-
-// module.exports = (app) => {
-//     app.get("/frania", (req, res) => {
-//         return res.send("Locadora da Frania!")
-//     })
-// }
-
