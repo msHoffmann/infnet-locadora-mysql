@@ -2,10 +2,18 @@ const database = require("../../../dbConfig/db/models");
 
 class MoviesController {
   
-  static async getAllMovie(req, res) {
+  // static async getActiveMovie(req, res) {
+  //   try {
+  //     const allTrueMovie = await database.Movies.findAll();
+  //     return res.status(200).send(allTrueMovie);
+  //   } catch (error) {
+  //     return res.status(500).send(error.message);
+  //   }
+  // }
+
+  static async getAllMovies(req, res) {
     try {
       const allMovies = await database.Movies.findAll();
-      // FAZER FILTRO POR GENERO!!!!
       return res.status(200).send(allMovies);
     } catch (error) {
       return res.status(500).send(error.message);
@@ -24,7 +32,6 @@ class MoviesController {
       if (!movie) {
         return res.status(404).send("O filme não existe. Tente outro id.");
       }
-
       return res.status(200).send(movie);
     } catch (error) {
       return res.status(500).send(error.message);
@@ -69,7 +76,7 @@ class MoviesController {
 
       const updatedMovie = await database.Movies.findOne({
         where: {
-          id: Number(movieId)
+          id: Number(movie_id)
         }
       });
       return res
@@ -110,3 +117,32 @@ class MoviesController {
 }
 
 module.exports = MoviesController;
+
+
+
+        // FAZER FILTRO POR GENERO!!!!
+          // movies/?sortBy=genre
+          // passa o parametro genero no body
+
+
+      // static async getMovieGenre(req, res) {
+      //   const { genre } = req.body;
+      //   try {
+      //     const movieGenre = await database.Movies.findAll();
+      //     return res.status(200).send(movieGenre);
+      //   } catch (error) {
+      //     return res.status(500).send(error.message);
+      //   }
+      // }
+
+      // static async getMovieGenre(req, res) {
+      //   const { genre } = req.body;
+      //   try {
+      //     const movieGenre = await database.Movies.findAll({
+      //   attributes: [genre]
+      // });
+      //     return res.status(200).send(movieGenre);
+      //   } catch (error) {
+      //     return res.status(500).send(error.message);
+      //   }
+      // }

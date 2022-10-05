@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       // });
 
       Clients.hasOne(models.Rents, {
-        foreignKey: "rent_id"
+        foreignKey: "id"
       });
     }
   }

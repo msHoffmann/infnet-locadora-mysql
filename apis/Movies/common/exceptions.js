@@ -1,5 +1,9 @@
-class MissingEmailException{}
+class MissingEmailException {}
+class InvalidRoleClientException {}
+class InvalidRoleFuncionarioException {}
 
 module.exports = {
-    MissingEmailException
+  MissingEmailException,
+  InvalidRoleClientException,
+  InvalidRoleFuncionarioException,
 };

@@ -1,5 +1,5 @@
 const database = require("../../../dbConfig/db/models");
-const { MissingEmailExecption } = require("../../common/exceptions");
+const { MissingEmailException } = require("../../Movies/common/exceptions");
 
 class ClientsController {
   
@@ -34,7 +34,7 @@ class ClientsController {
   static async createClient(req, res) {
     const { name, email } = req.body;
     const isEmail = validator.isEmail(email);
-    if(!isEmail) throw new MissingEmailExecption();
+    if(!isEmail) throw new MissingEmailException();
 
     try {
       const verifyingClient = await database.Clients.findOne({
@@ -75,7 +75,7 @@ class ClientsController {
       });
       return res
         .status(200)
-        .send({ msg: "Cliente atualizado com sucesso!", ...updatedClient });
+        .send({ message: "Cliente atualizado com sucesso!", ...updatedClient });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -89,7 +89,9 @@ class ClientsController {
           id: Number(client_id)
         }
       });
-      return res.status(200).send("Cliente deletado com sucesso!");
+      return res
+      .status(200)
+      .send({ message: "O cliente com id: ${client_id} foi deletado com sucesso."});
     } catch (error) {
       return res.status(500).send(error.message);
     }

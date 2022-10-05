@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       // })
 
       Movies.hasOne(models.Rents, {
-        foreignKey: "rent_id"
+        foreignKey: "id"
       }); 
       // (se tiver apenas 1 unidade do filme)
 
@@ -29,18 +29,18 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Movies',
     paranoid: true,
-    defaultScope: {
-      where: {
-        ativo: true
-      }
-    },
-    scopes: {
-      comedyMovies: {
-        where: {
-          genre: "Comedy"
-        }
-      }
-    }
+    // defaultScope: {
+    //   where: {
+    //     ativo: true
+    //   }
+    // },
+    // scopes: {
+    //   comedyMovies: {
+    //     where: {
+    //       genre: "Comedy"
+    //     }
+    //   }
+    // }
   });
   return Movies;
 };
