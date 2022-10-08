@@ -8,18 +8,21 @@ module.exports = {
         {
           name: "Michel Baes",
           email: "mbaes@baes.com",
+          role: "client",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           name: "Emilia Lopes",
           email: "emilia@lopes.com",
+          role: "client",
           createdAt: new Date(),
           updatedAt: new Date()
         }, 
         {
           name: "Frania Hoffmann",
           email: "frania@hoffmann.com",
+          role: "employee",
           createdAt: new Date(),
           updatedAt: new Date()
         },  
@@ -28,11 +31,5 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
   }
 };

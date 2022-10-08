@@ -15,6 +15,7 @@ const createToken = async (req, res) => {
                 const payload = {
                     name: name,
                     email: email,
+                    role: role
                 };
                 const token = jwt.sign(payload, process.env.JWT_KEY);
                 res.set("Authorization", token);
@@ -46,12 +47,12 @@ const authMidClient = async (req, res, next) => {
     }
   };
   
-  const authMidFuncionario = async (req, res, next) => {
+  const authMidEmployee = async (req, res, next) => {
     const token = req.headers.authorization;
     if (token) {
       try {
         const payload = jwt.verify(token, process.env.JWT_KEY);
-        if (payload.role === "funcionario") {
+        if (payload.role === "employee") {
           return next();
         } else {
           return res.status(400).send("Invalid token");
@@ -65,9 +66,9 @@ const authMidClient = async (req, res, next) => {
   };
   
   module.exports = {
-    authMidEstudante,
+    authMidClient,
     createToken,
-    authMidDocente
+    authMidEmployee
   };
   
   

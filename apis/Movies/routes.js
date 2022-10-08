@@ -5,9 +5,10 @@ const { authMidClient } = require("../Users/services/auth.service");
 
 
 // GET
-// route.get("/active-movie", moviesController.getActiveMovie);
 route.get("/movies/:movie_id", moviesController.getOneMovie);
 route.get("/movies", moviesController.getAllMovies);
+route.get("/movies-genre", moviesController.getMoviesbyGenre);
+route.get("/movies-title", moviesController.getMoviebyTitle);
 
 // POST
 route.post("/movie", moviesController.createMovie);
@@ -21,11 +22,5 @@ route.delete("/delete-movie/:movie_id", moviesController.deleteMovie);
 
 module.exports = route;
 
-
-// FAZER!!!!
-// route.get
-// /movies-api/movies/?genre=drama
-// /movies-api/movies/?sortBy=title
-// route.get("movies/?sortBy=genre", moviesController.getMovieGenre);
 
 

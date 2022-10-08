@@ -1,6 +1,7 @@
 const clientsApi = require("../apis/Clients/routes");
 const moviesApi = require("../apis/Movies/routes");
 const rentsApi = require("../apis/Rents/routes");
+const { createToken } = require("../apis/Users/services/auth.service");
 
 module.exports = (app) => {
     app.get("/locadora", (req, res) => res.send("Welcome to my fist Backend Project :)"));

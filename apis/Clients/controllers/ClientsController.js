@@ -1,5 +1,6 @@
 const database = require("../../../dbConfig/db/models");
 const { MissingEmailException } = require("../../Movies/common/exceptions");
+const validator = require("validator");
 
 class ClientsController {
   
@@ -32,7 +33,7 @@ class ClientsController {
   }
 
   static async createClient(req, res) {
-    const { name, email } = req.body;
+    const { name, email, role } = req.body;
     const isEmail = validator.isEmail(email);
     if(!isEmail) throw new MissingEmailException();
 
@@ -49,10 +50,11 @@ class ClientsController {
       const client = await database.Clients.create({
         name,
         email,
+        role
       });
       return res
         .status(200)
-        .send({ msg: "Cliente cadastrado com sucesso!", ...movie });
+        .send({ msg: "Cliente cadastrado com sucesso!", ...client });
     } catch (error) {
       return res.status(500).send(error.message);
     }

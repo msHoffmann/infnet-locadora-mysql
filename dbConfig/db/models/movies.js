@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       Movies.hasOne(models.Rents, {
         foreignKey: "id"
       }); 
+
+      Movies.hasMany(models.Genre, {
+        foreignKey: "movie_id"
+      })
       // (se tiver apenas 1 unidade do filme)
 
       // Movies.hasMany(models.Rents, {
@@ -24,23 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     year: DataTypes.NUMBER,
-    genre: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Movies',
     paranoid: true,
-    // defaultScope: {
-    //   where: {
-    //     ativo: true
-    //   }
-    // },
-    // scopes: {
-    //   comedyMovies: {
-    //     where: {
-    //       genre: "Comedy"
-    //     }
-    //   }
-    // }
   });
   return Movies;
 };
