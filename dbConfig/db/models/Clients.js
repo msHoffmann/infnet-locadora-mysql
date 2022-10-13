@@ -16,8 +16,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   Clients.init({
     name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    role: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: "E-mail inválido."
+        }
+      }
+    },
+    role: {
+      type: DataTypes.STRING,
+      validate: {
+        isIn: {
+          args: [["employee", "client"]],
+          msg: "Os usuários só podem ser cadastrados como 'Employee' ou 'Client'."
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Clients',

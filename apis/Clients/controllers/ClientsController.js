@@ -34,9 +34,7 @@ class ClientsController {
 
   static async createClient(req, res) {
     const { name, email, role } = req.body;
-    const isEmail = validator.isEmail(email);
-    if(!isEmail) throw new MissingEmailException();
-
+    
     try {
       const verifyingClient = await database.Clients.findOne({
         where: {
@@ -58,6 +56,19 @@ class ClientsController {
     } catch (error) {
       return res.status(500).send(error.message);
     }
+  }
+
+
+  static async restoreClient(req, res) {
+    const { client_id } = req.params;
+    try {
+      await database.Clients.restore({
+        where: {
+          id: Number(client_id)
+        }
+      });
+      return res.status(200).send({ msg: "Cliente restaurado com sucesso!"});
+    } catch (error) {}
   }
 
   static async editClient(req, res) {
@@ -86,7 +97,7 @@ class ClientsController {
   static async deleteClient(req, res) {
     const { client_id } = req.params;
     try {
-      await database.Movies.destroy({
+      await database.Clients.destroy({
         where: {
           id: Number(client_id)
         }

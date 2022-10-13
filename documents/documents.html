@@ -58,7 +58,6 @@ quando o modelo é paranoid, trabalhamos com soft deletion
 *Bando de Dados Relacional
 consistência entre informações. se o dado está relacionado em 2 tabelas, é preciso retirar ele das tabelas para depois deletar do DB
 
-
 :movie_id
 parametro
 
@@ -68,8 +67,21 @@ query
 FILTRO x ORDENACAO
 sortby x findAll
 
-
 exemplos: findOne ou findAll
 ordenação - padrao por ID
 
 scope - getAll mas com caracteristica especifica que eu vou definir
+
+getlers(pegar valor privado de uma classe) and setlers(alterar valor privado de uma classe)
+
+mixin 
+
+validators - tem "args" e "msg" - verifica o que é passado está de acordo com o argumento "args" do validator. se estiver errado, recebe a "msg"
+
+micro serviços - camada de responsabilidade, camada dos SERVICES: controller tem repsonsabilidade apenas de manipular / tratar os dados e assim os SERVICES vai ao banco e faz o cadastro, exclusão, etc. os SERVICES pegam esses dados e trazem de volta para os controllers. diminui a repsonsabilidade do controller e coloca ela no SERVICE
+
+sequelize operators - "op" - trabalhar com menor, igual, diferente, entre x e y
+
+transaction - 
+
+jwt - encoded = header (algoritmo + tipo)+ payload (data do payload que definimos) + verify signature (mix dos 2 de cima)

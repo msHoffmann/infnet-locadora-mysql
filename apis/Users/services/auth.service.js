@@ -3,21 +3,21 @@ const database = require("../../../dbConfig/db/models");
 require("dotenv").config();
 
 const createToken = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role} = req.body;
     try {
-        const user = await database.AdminUsers.findOne({
+        const user = await database.Clients.findOne({
             where: {
                 email: email
             }
         });
         if (user) {
-            if (user.password == password) {
+            if (user.password == password && user.role == "employee" ) {
                 const payload = {
                     name: name,
                     email: email,
                     role: role
                 };
-                const token = jwt.sign(payload, process.env.JWT_KEY);
+                const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: "2h" });
                 res.set("Authorization", token);
                 res.status(204).send("Success");           
             }
@@ -34,7 +34,7 @@ const authMidClient = async (req, res, next) => {
     if (token) {
       try {
         const payload = jwt.verify(token, process.env.JWT_KEY);
-        if (payload.role === "cliente") {
+        if (payload.role === "client") {
           return next();
         } else {
           return res.status(400).send("Invalid token");

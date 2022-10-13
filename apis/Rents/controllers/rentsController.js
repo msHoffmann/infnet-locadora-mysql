@@ -37,7 +37,7 @@ class RentsController {
       });
       if (!rentsClient) {
         return res.status(404).send("Aluguel não existe.");
-      }
+      }f
       return res.status(200).send(rentsClient);
     } catch (error) {
       return res.status(500).send(error.message);
@@ -45,7 +45,7 @@ class RentsController {
   }
 
   static async createRent(req, res) {
-    const { movie_id, client_id } = req.body;
+    const { movie_id, client_id } = req.params;
     try {
       const verifyingRent = await database.Rents.findOne({
         where: {
@@ -65,7 +65,7 @@ class RentsController {
       });
 
       if (!verifyingClient) {
-        return res.send("Usuario não existe.", { verifyingClient });
+        return res.send("Usuário não existe.", { verifyingClient });
       }
 
       const verifyingMovie = await database.Movies.findOne({
@@ -79,9 +79,9 @@ class RentsController {
       }
 
       const rent = await database.Rents.create({
-        status: "Alugado!",
-        client_id: client_id,
-        movie_id: movie_id
+          movie_id: movie_id,
+          client_id: client_id,
+          status: "Alugado!"
       });
 
       return res
