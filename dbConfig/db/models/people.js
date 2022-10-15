@@ -3,18 +3,18 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Clients extends Model {
+  class People extends Model {
     static associate(models) {
-      // Clients.hasOne(models.Movies, {
+      // People.hasOne(models.Movies, {
       //   foreignKey: "movie_id"
       // });
 
-      Clients.hasOne(models.Rents, {
+      People.hasOne(models.Rents, {
         foreignKey: "id"
       });
     }
   }
-  Clients.init({
+  People.init({
     name: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Clients',
-    paranoid: true
+    modelName: 'People',
+    paranoid: true,
   });
-  return Clients;
+  return People;
 };

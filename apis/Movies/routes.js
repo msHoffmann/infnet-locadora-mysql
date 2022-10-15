@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const route = Router();
 const moviesController = require("./controllers/MoviesController");
-const { authMidClient } = require("../Users/services/auth.service");
+const { authMidPeople } = require("../Users/services/auth.service");
 
 
 // GET
@@ -18,7 +18,8 @@ route.post("/restore-movie/:movie_id", moviesController.restoreMovie);
 route.put("/movie/:movie_id", moviesController.editMovie);
 
 // DELETE
-route.delete("/delete-movie/:movie_id", moviesController.deleteMovie);
+route.delete("/hard-delete-movie/:movie_id", moviesController.hardDeleteMovie);
+route.delete("/soft-delete-movie/:movie_id", moviesController.softDeleteMovie);
 
 module.exports = route;
 

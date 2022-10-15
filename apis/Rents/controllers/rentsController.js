@@ -3,13 +3,13 @@ const database = require("../../../dbConfig/db/models");
 class RentsController {
   static async getAllRents(req, res) {
     try {
-      const allRents = await database.Rents.findAll({
+      const allRents = await database.Rents.findAndCountAll({
         include: [
           {
             model: database.Movies,
           },
           {
-            model: database.Clients,
+            model: database.People,
           },
         ],
       });
@@ -19,33 +19,33 @@ class RentsController {
     }
   }
 
-  static async getRentsByClient(req, res) {
-    const { client_id } = req.params;
+  static async getRentsByPeople(req, res) {
+    const { people_id } = req.params;
     try {
-      const rentsClient = await database.Rents.findOne({
+      const rentsPeople = await database.Rents.findOne({
         where: {
-          id: Number(client_id),
+          id: Number(people_id),
         },
         include: [
           {
-            model: database.Clients,
+            model: database.People,
           },
           {
             model: database.Movies,
           },
         ],
       });
-      if (!rentsClient) {
+      if (!rentsPeople) {
         return res.status(404).send("Aluguel não existe.");
       }f
-      return res.status(200).send(rentsClient);
+      return res.status(200).send(rentsPeople);
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
 
   static async createRent(req, res) {
-    const { movie_id, client_id } = req.params;
+    const { movie_id, people_id } = req.params;
     try {
       const verifyingRent = await database.Rents.findOne({
         where: {
@@ -58,14 +58,14 @@ class RentsController {
         return res.send("O filme já está alugado! Alugue outro.", { verifyingRent });
       }
 
-      const verifyingClient = await database.Clients.findOne({
+      const verifyingPeople = await database.People.findOne({
         where: {
-          id: client_id
+          id: people_id
         },
       });
 
-      if (!verifyingClient) {
-        return res.send("Usuário não existe.", { verifyingClient });
+      if (!verifyingPeople) {
+        return res.send("Usuário não existe.", { verifyingPeople });
       }
 
       const verifyingMovie = await database.Movies.findOne({
@@ -80,7 +80,7 @@ class RentsController {
 
       const rent = await database.Rents.create({
           movie_id: movie_id,
-          client_id: client_id,
+          people_id: people_id,
           status: "Alugado!"
       });
 

@@ -5,13 +5,14 @@ require("dotenv").config();
 const createToken = async (req, res) => {
     const { name, email, password, role} = req.body;
     try {
-        const user = await database.Clients.findOne({
+        const user = await database.People.findOne({
             where: {
                 email: email
             }
         });
+        console.log("testando! ", user);
         if (user) {
-            if (user.password == password && user.role == "employee" ) {
+            if (user.password == password && user.role == "funcionario" ) {
                 const payload = {
                     name: name,
                     email: email,
@@ -20,10 +21,12 @@ const createToken = async (req, res) => {
                 const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: "2h" });
                 res.set("Authorization", token);
                 res.status(204).send("Success");           
+            } else {
+              return res.send("1233131231231231313")
             }
         } else {
             return res.status(400).send("Invalid credentials.");
-        }
+        } 
     } catch (error) {
         return res.status(500).send(error.message);
     }

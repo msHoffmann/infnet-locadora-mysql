@@ -23,7 +23,7 @@ class MoviesController {
 
   static async getAllMovies(req, res) {
     try {
-      const allMovies = await database.Movies.findAll();
+      const allMovies = await database.Movies.findAndCountAll();
       return res.status(200).send(allMovies);
     } catch (error) {
       return res.status(500).send(error.message);
@@ -33,7 +33,7 @@ class MoviesController {
   static async getMoviesbyGenre(req, res) {
     const { genre } = req.body;
     try {
-      const movieGenre = await database.Movies.findAll({
+      const movieGenre = await database.Movies.findAndCountAll({
         include: [
           {
             model: database.Genre, 
@@ -143,19 +143,36 @@ class MoviesController {
     }
   }
 
-  static async deleteMovie(req, res) {
+  static async softDeleteMovie(req, res) {
     const { movie_id } = req.params;
     try {
       await database.Movies.destroy({
         where: {
-          id: Number(movie_id)
-        }
+          id: Number(movie_id),
+        },
+
       });
       return res.status(200).send("Filme deletado com sucesso!");
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
+
+  static async hardDeleteMovie(req, res) {
+    const { movie_id } = req.params;
+    try {
+      await database.Movies.scope("forceDelete").destroy({
+        where: {
+          id: Number(movie_id)
+        },
+        force: true
+      })
+      return res.status(200).send("Filme deletado com sucesso!");
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  }
+
 }
 
 module.exports = MoviesController;

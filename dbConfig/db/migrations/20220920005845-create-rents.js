@@ -11,11 +11,11 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
-      client_id: {
+      people_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Clients",
+          model: "People",
           key: "id"
         }
       },

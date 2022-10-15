@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Movies extends Model {
     static associate(models) {
-      // Movies.hasOne(models.Clients, {
+      // Movies.hasOne(models.People, {
       //   foreignKey: "movie_id"
       // })
 

@@ -4,14 +4,14 @@ const rentsController = require("./controllers/rentsController");
 
 // GET
 route.get("/rents", rentsController.getAllRents);
-route.get("/rents/:client_id/rents", rentsController.getRentsByClient);
+route.get("/rents/:people_id/rents", rentsController.getRentsByPeople);
 
 // POST
-// cliente fez um aluguel (rent)
-route.post("/rents/:client_id/movie/:movie_id", rentsController.createRent);
+// pessoa fez um aluguel (rent)
+route.post("/rents/:people_id/movie/:movie_id", rentsController.createRent);
 
 // DELETE
-// cliente devolveu um aluguel (rent)
+// pessoa devolveu um aluguel (rent)
 route.delete("/rents/rent-delete/:id", rentsController.deleteRent); 
 
 module.exports = route;
