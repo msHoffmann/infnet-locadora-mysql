@@ -11,12 +11,12 @@ route.get("/people/:people_id", PeopleController.getOnePeople);
 route.get("/people", PeopleController.getAllPeople);
 
 // POST
-route.post("/people", PeopleController.createPeople);
-route.post("/people-restore/:people_id", restorePeople);
+route.post("/people", authMidEmployee, PeopleController.createPeople);
+route.post("/people-restore/:people_id", authMidEmployee, restorePeople);
 // PUT
-route.put("/edit-people/:people_id", PeopleController.editPeople);
+route.put("/edit-people/:people_id", authMidEmployee, PeopleController.editPeople);
 
 // DELETE
-route.delete("/delete-people/:people_id", PeopleController.deletePeople);
+route.delete("/delete-people/:people_id", authMidEmployee, PeopleController.deletePeople);
 
 module.exports = route;

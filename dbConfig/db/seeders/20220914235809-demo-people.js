@@ -8,7 +8,7 @@ module.exports = {
         {
           name: "Michel Baes",
           email: "mbaes@baes.com",
-          role: "client",
+          role: "Client",
           password: "Mi10190!!123",
           createdAt: new Date(),
           updatedAt: new Date()
@@ -16,7 +16,7 @@ module.exports = {
         {
           name: "Eduarda Blei",
           email: "eduarda@blei.com",
-          role: "client",
+          role: "Client",
           password: "DB101190!1239013",
           createdAt: new Date(),
           updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
         {
           name: "Fernanda Cardoso",
           email: "fernanda@cardoso.com",
-          role: "client",
+          role: "Client",
           password: "FC101190!1239013",
           createdAt: new Date(),
           updatedAt: new Date()
@@ -32,7 +32,7 @@ module.exports = {
         {
           name: "Frania Hoffmann",
           email: "frania@hoffmann.com",
-          role: "employee",
+          role: "Employee",
           password: "12345678!Fr",
           createdAt: new Date(),
           updatedAt: new Date()

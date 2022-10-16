@@ -2,26 +2,25 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Movies extends Model {
     static associate(models) {
-      // Movies.hasOne(models.People, {
-      //   foreignKey: "movie_id"
-      // })
 
       Movies.hasOne(models.Rents, {
         foreignKey: "id"
       }); 
-
-      Movies.hasMany(models.Genre, {
-        foreignKey: "movie_id"
-      })
       // (se tiver apenas 1 unidade do filme)
 
       // Movies.hasMany(models.Rents, {
       //   foreignKey: "rent_id"
       // }); 
       // (se tiver varias unidades do filme)
+
+      Movies.hasMany(models.Genres, {
+        foreignKey: "id"
+      })
+
     }
   }
   Movies.init({

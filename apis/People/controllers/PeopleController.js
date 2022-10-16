@@ -1,5 +1,4 @@
 const database = require("../../../dbConfig/db/models");
-const { MissingEmailException } = require("../../Movies/common/exceptions");
 const validator = require("validator");
 
 class PeopleController {

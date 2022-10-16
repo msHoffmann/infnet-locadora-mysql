@@ -3,18 +3,18 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Genre extends Model {
+  class Genres extends Model {
     static associate(models) {
-      Genre.belongsTo(models.Movies, {
+      Genres.belongsTo(models.Movies, {
         foreignKey: "movie_id"
       })
     }
   }
-  Genre.init({
+  Genres.init({
     description: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Genre',
+    modelName: 'Genres',
   });
-  return Genre;
+  return Genres;
 };

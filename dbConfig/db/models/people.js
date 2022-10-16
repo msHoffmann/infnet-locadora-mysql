@@ -29,13 +29,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isIn: {
-          args: [["employee", "client"]],
+          args: [["Employee", "Client"]],
           msg: "Os usuários só podem ser cadastrados como 'Employee' ou 'Client'."
         }
       }
     }
   }, {
-    sequelize,
+    sequelize,  
     modelName: 'People',
     paranoid: true,
   });

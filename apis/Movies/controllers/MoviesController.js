@@ -3,15 +3,25 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 class MoviesController {
 
+
+  static async getAllMovies(req, res) {
+    try {
+      const allMovies = await database.Movies.findAndCountAll({});
+      // const allMovies = await database.findAndCountAall({ include: Genres }); - > erro: Genres is not defined
+      return res.status(200).send(allMovies);
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  }
+  
   static async getOneMovie(req, res) {
     const { movie_id } = req.params;
     try {
       const movie = await database.Movies.findOne({
         where: {
           id: Number(movie_id)
-        }
+        },
       });
-
       if (!movie) {
         return res.status(404).send("O filme não existe. Tente outro id.");
       }
@@ -21,24 +31,15 @@ class MoviesController {
     }
   }
 
-  static async getAllMovies(req, res) {
+  static async getMoviesbyGenres(req, res) {
+    const { genres } = req.body;
     try {
-      const allMovies = await database.Movies.findAndCountAll();
-      return res.status(200).send(allMovies);
-    } catch (error) {
-      return res.status(500).send(error.message);
-    }
-  }
-
-  static async getMoviesbyGenre(req, res) {
-    const { genre } = req.body;
-    try {
-      const movieGenre = await database.Movies.findAndCountAll({
+      const movieGenres = await database.Movies.findAndCountAll({
         include: [
           {
-            model: database.Genre, 
+            model: database.Genres, 
             where: {
-              description: genre,
+              description: genres,
             },
             attributes: [
               "description"
@@ -46,7 +47,7 @@ class MoviesController {
           }
           ]
         });
-      return res.status(200).send(movieGenre);
+      return res.status(200).send(movieGenres);
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -59,7 +60,7 @@ class MoviesController {
         where: {
           title: {
             [Op.like]: '%' + title + '%'
-          }
+          },
         }
       });
 
@@ -90,7 +91,7 @@ class MoviesController {
         year,
       });
       genres.forEach(element => {
-        database.Genre.create(
+        database.Genres.create(
           {
             description: element,
             movie_id: movie.id,

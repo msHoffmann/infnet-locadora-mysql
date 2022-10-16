@@ -6,32 +6,20 @@ module.exports = {
       "Genres",
       [
         {
-          description: "Disney",
-          movie_id: 1,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
           description: "Horror",
           movie_id: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          description: "Romance",
-          movie_id: 2,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          description: "Musical",
+          description: "Horror",
           movie_id: 3,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          description: "Historical Drama",
-          movie_id: 2,
+          description: "Thriller",
+          movie_id: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -42,17 +30,29 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          description: "Children",
-          movie_id: 7,
+          description: "Drama",
+          movie_id: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          description: "Thriller",
-          movie_id: 1,
+          description: "Historical",
+          movie_id: 2,
           createdAt: new Date(),
           updatedAt: new Date()
-        }
+        },
+        {
+          description: "Disney",
+          movie_id: 3,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          description: "Musical",
+          movie_id: 3,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
       ],
       {}
     );
@@ -61,3 +61,4 @@ module.exports = {
   async down(queryInterface, Sequelize) {
   }
 };
+
