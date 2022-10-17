@@ -11,11 +11,11 @@ route.get("/movies-genres", moviesController.getMoviesbyGenres);
 route.get("/movies-title", moviesController.getMoviebyTitle);
 
 // POST
-route.post("/movie", authMidEmployee, moviesController.createMovie);
-route.post("/restore-movie/:movie_id", authMidEmployee, moviesController.restoreMovie);
+route.post("/movie", moviesController.createMovie);
+route.post("/restore-movie/:movie_id", moviesController.restoreMovie);
 
 // PUT
-route.put("/movie/:movie_id", authMidEmployee, moviesController.editMovie);
+route.put("/movie/:movie_id", moviesController.editMovie);
 
 // DELETE
 route.delete("/hard-delete-movie/:movie_id", authMidEmployee, moviesController.hardDeleteMovie);

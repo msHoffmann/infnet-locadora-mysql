@@ -1,5 +1,7 @@
 const database = require("../../../dbConfig/db/models");
-const validator = require("validator");
+// const validator = require("validator");
+// const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 class PeopleController {
   
@@ -44,6 +46,8 @@ class PeopleController {
       if (verifyingPeople) {
         return res.send("A pessoa já está cadastrada.", { verifyingPeople });
       }
+
+      // var newPassword = bcrypt.hashSync(password, salt)
 
       // colocar BCRYPT!!!!
 
@@ -95,22 +99,37 @@ class PeopleController {
       return res.status(500).send(error.message);
     }
   }
-
-  static async deletePeople(req, res) {
+  
+  static async softDeletePeople(req, res) {
     const { people_id } = req.params;
     try {
       await database.People.destroy({
         where: {
-          id: Number(people_id)
-        }
+          id: Number(people_id),
+        },
+
       });
-      return res
-      .status(200)
-      .send({ message: `A pessoa com id ${people_id} foi deletada com sucesso.`});
+      return res.status(200).send("Pessoa deletada com sucesso!");
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
+
+  static async hardDeletePeople(req, res) {
+    const { people_id } = req.params;
+    try {
+      await database.Movies.scope("forceDelete").destroy({
+        where: {
+          id: Number(people_id)
+        },
+        force: true
+      })
+      return res.status(200).send("Pessoa deletado com sucesso!");
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  }
+
 }
 
 module.exports = PeopleController;

@@ -4,19 +4,18 @@ const { authMidEmployee } = require("../Users/services/auth.service");
 const { restorePeople } = require("./controllers/PeopleController");
 const PeopleController = require("./controllers/PeopleController");
 
-// router.use(authMidEmployee); quero colocar em todas de POST, PUT, DELETE
-
 // GET
 route.get("/people/:people_id", PeopleController.getOnePeople);
 route.get("/people", PeopleController.getAllPeople);
 
 // POST
-route.post("/people", authMidEmployee, PeopleController.createPeople);
-route.post("/people-restore/:people_id", authMidEmployee, restorePeople);
+route.post("/people",PeopleController.createPeople);
+route.post("/people-restore/:people_id", restorePeople);
 // PUT
-route.put("/edit-people/:people_id", authMidEmployee, PeopleController.editPeople);
+route.put("/edit-people/:people_id", PeopleController.editPeople);
 
 // DELETE
-route.delete("/delete-people/:people_id", authMidEmployee, PeopleController.deletePeople);
+route.delete("/hard-delete-people/:people_id", authMidEmployee, PeopleController.hardDeletePeople);
+route.delete("/soft-delete-people/:people_id", authMidEmployee, PeopleController.softDeletePeople);
 
 module.exports = route;

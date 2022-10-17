@@ -9,7 +9,7 @@ route.get("/rents/:people_id/rents", rentsController.getRentsByPeople);
 
 // POST
 // pessoa fez um aluguel (rent)
-route.post("/rents/:people_id/movie/:movie_id", authMidEmployee, rentsController.createRent);
+route.post("/rents/:people_id/movie/:movie_id", rentsController.createRent);
 
 // DELETE
 // pessoa devolveu um aluguel (rent)
