@@ -9,14 +9,20 @@ route.get("/people/:people_id", PeopleController.getOnePeople);
 route.get("/people", PeopleController.getAllPeople);
 
 // POST
-route.post("/create-people",PeopleController.createPeople);
+route.post("/create-people", PeopleController.createPeople);
 route.post("/people-restore/:people_id", restorePeople);
 
 // PUT
 route.put("/edit-people/:people_id", PeopleController.editPeople);
 
 // DELETE
-route.delete("/hard-delete-people/:people_id", authMidEmployee, PeopleController.hardDeletePeople);
-route.delete("/soft-delete-people/:people_id", authMidEmployee, PeopleController.softDeletePeople);
+route.delete(
+  "/hard-delete-people/:people_id",
+  PeopleController.hardDeletePeople
+);
+route.delete(
+  "/soft-delete-people/:people_id",
+  PeopleController.softDeletePeople
+);
 
 module.exports = route;

@@ -3,7 +3,6 @@ const route = Router();
 const moviesController = require("./controllers/MoviesController");
 const { authMidEmployee } = require("../Users/services/auth.service");
 
-
 // GET
 route.get("/movies/:movie_id", moviesController.getOneMovie);
 route.get("/movies", moviesController.getAllMovies);
@@ -18,10 +17,11 @@ route.post("/restore-movie/:movie_id", moviesController.restoreMovie);
 route.put("/movie/:movie_id", moviesController.editMovie);
 
 // DELETE
-route.delete("/hard-delete-movie/:movie_id", authMidEmployee, moviesController.hardDeleteMovie);
-route.delete("/soft-delete-movie/:movie_id", authMidEmployee, moviesController.softDeleteMovie);
+route.delete("/hard-delete-movie/:movie_id", moviesController.hardDeleteMovie);
+route.delete(
+  "/soft-delete-movie/:movie_id",
+  authMidEmployee,
+  moviesController.softDeleteMovie
+);
 
 module.exports = route;
-
-
-

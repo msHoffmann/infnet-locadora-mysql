@@ -5,17 +5,17 @@ require("dotenv").config();
 const createToken = async (req, res) => {
   const { email, password, name, role } = req.body;
   try {
-    const user = await database.AdminUsers.findOne({
+    const user = await database.People.findOne({
       where: {
-        email: email
-      }
+        email: email,
+      },
     });
     if (user) {
       if (user.password === password) {
         const payload = {
           email: email,
           name: name,
-          role: role
+          role: role,
         };
         const token = jwt.sign(payload, process.env.JWT_KEY);
         res.set("Authorization", token);
@@ -68,5 +68,5 @@ const authMidEmployee = async (req, res, next) => {
 module.exports = {
   authMidClient,
   createToken,
-  authMidEmployee
+  authMidEmployee,
 };

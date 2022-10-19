@@ -172,7 +172,7 @@ class MoviesController {
   static async hardDeleteMovie(req, res) {
     const { movie_id } = req.params;
     try {
-      await database.Movies.scope("forceDelete").destroy({
+      await database.Movies.destroy({
         where: {
           id: Number(movie_id),
         },

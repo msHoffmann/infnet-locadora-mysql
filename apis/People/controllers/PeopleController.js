@@ -46,14 +46,7 @@ class PeopleController {
           role,
           password: newPassword,
         })
-      : console.log("Erro! =(");
-
-    // const hashedPassword = await bcrypt.hash(password, 10);
-    // res.status(200).send("Funcionando");
-    // const hashedPassword = 's0/\/\P4$$w0rD';
-
-    // const hash = await bcrypt.hash(password, 10)
-    // await db("People").insert({email: email, hash: hash});
+      : console.log("Erro");
 
     try {
       const verifyingPeople = await database.People.findOne({
@@ -136,67 +129,17 @@ class PeopleController {
   static async hardDeletePeople(req, res) {
     const { people_id } = req.params;
     try {
-      await database.Movies.scope("forceDelete").destroy({
+      await database.People.destroy({
         where: {
           id: Number(people_id),
         },
         force: true,
       });
-      return res.status(200).send("Pessoa deletado com sucesso!");
+      return res.status(200).send("Pessoa deletada com sucesso!");
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
 }
-
-// static async createUser(req, res) {
-
-//   const body = req.body;
-
-//   try {
-
-//       const newUser = await createNewUser(body);
-
-//       const userResponse = userMapper.oneUser(newUser);
-
-//       userResponse.token = token(userResponse.id, userResponse.email, userResponse.type);
-
-//       return res.status(201).send(userResponse);
-
-//   } catch (error) {
-//       errorResponse(error, res);
-//   };
-// };
-
-// module.exports = async ( { name, nickname, email, password, departament, type } ) => {
-
-//   const encryptedPassword = await bcrypt.hash(password, 10);
-
-//   const verifyIfUserExists = await findUserByEmail(email)
-
-//   if(verifyIfUserExists) {
-//       throw new BusinessError('User email already exists', 202)
-//   };
-
-//   const user = {
-//       name,
-//       nickname,
-//       email,
-//       password: encryptedPassword,
-//       departament,
-//       type: type || 2,
-//       status: 'active'
-//   };
-
-//   if (nickname === '' || !nickname){
-//       const setNickname = name.split(' ')[0].slice(0,13)
-//       user.nickname = setNickname
-//   }
-
-//   const userResponse = await db.Users.create(user);
-
-//     return userResponse;
-
-// }
 
 module.exports = PeopleController;

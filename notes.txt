@@ -1,0 +1,23 @@
+DÚVIDAS:
+
+Create People e Create Adm User : tirar tabela ADM USER? , está duplicando quando faço a requisição
+
+
+TODO:
+
+Resposta ERROR : Trocar para JSON: res.json ou algo do tipo?
+
+   } catch (error) {
+      return res.status(500).send({
+        Message: error
+      });
+    }
+  }
+
+
+
+Fotos Destkop
+Validator nas Rotas
+Services (exemplo: auth.service.js)
+Colocar novamente auth mid employee para rotas de DELETE
+

@@ -6,10 +6,12 @@ const user = require("../apis/Users/routes");
 const { createToken } = require("../apis/Users/services/auth.service");
 
 module.exports = (app) => {
-    app.get("/locadora", (req, res) => res.send("Welcome to my first Backend Project :)"));
-    app.post("/auth", createToken);
-    app.use("/people-api", peopleApi);
-    app.use("/movies-api", moviesApi);
-    app.use("/rents-api", rentsApi);
-    app.use("/users-api", user);
-}
+  app.get("/locadora", (req, res) =>
+    res.send("Welcome to my first Backend Project :)")
+  );
+  app.post("/auth-create-token", createToken);
+  app.use("/people-api", peopleApi);
+  app.use("/movies-api", moviesApi);
+  app.use("/rents-api", rentsApi);
+  app.use("/users-api", user);
+};
