@@ -1,9 +1,7 @@
 const database = require("../../../dbConfig/db/models");
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 class MoviesController {
-
-
   static async getAllMovies(req, res) {
     try {
       const allMovies = await database.Movies.findAndCountAll({});
@@ -13,18 +11,29 @@ class MoviesController {
       return res.status(500).send(error.message);
     }
   }
-  
+
   static async getOneMovie(req, res) {
     const { movie_id } = req.params;
     try {
       const movie = await database.Movies.findOne({
         where: {
-          id: Number(movie_id)
+          id: Number(movie_id),
         },
       });
       if (!movie) {
         return res.status(404).send("O filme não existe. Tente outro id.");
       }
+
+      const genre = await database.Genres.findAll({
+        where: {
+          movie_id: Number(movie_id),
+        },
+        attributes: ["description"],
+      });
+
+      const result = genre.map((item) => item.dataValues.description);
+      movie.dataValues.genres = result;
+
       return res.status(200).send(movie);
     } catch (error) {
       return res.status(500).send(error.message);
@@ -34,22 +43,26 @@ class MoviesController {
   static async getMoviesbyGenres(req, res) {
     const { genres } = req.body;
     try {
-      const movieGenres = await database.Movies.findAndCountAll({
+      const movieGenres = await database.Movies.findAll({
         include: [
           {
-            model: database.Genres, 
+            model: database.Genres,
             where: {
               description: genres,
             },
-            attributes: [
-              "description"
-            ]
-          }
-          ]
-        });
+            attributes: ["description"],
+          },
+        ],
+      });
+
+      if (movieGenres == 0) {
+        throw "Não temos nenhum filme com esse gênero.";
+      }
       return res.status(200).send(movieGenres);
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).send({
+        Message: error,
+      });
     }
   }
 
@@ -59,17 +72,18 @@ class MoviesController {
       const movieTitle = await database.Movies.findAll({
         where: {
           title: {
-            [Op.like]: '%' + title + '%'
+            [Op.like]: "%" + title + "%",
           },
-        }
+        },
       });
-
-      if (!movieTitle) {
-        return res.status(404).send("Desculpe, não temos esse filme na locadora.");
+      if (movieTitle == 0) {
+        throw "Desculpe, não temos esse filme na locadora.";
       }
       return res.status(200).send(movieTitle);
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).send({
+        Message: error,
+      });
     }
   }
 
@@ -78,8 +92,8 @@ class MoviesController {
     try {
       const verifyingMovie = await database.Movies.findOne({
         where: {
-          title: title
-        }
+          title: title,
+        },
       });
 
       if (verifyingMovie) {
@@ -90,13 +104,11 @@ class MoviesController {
         description,
         year,
       });
-      genres.forEach(element => {
-        database.Genres.create(
-          {
-            description: element,
-            movie_id: movie.id,
-          }
-        )
+      genres.forEach((element) => {
+        database.Genres.create({
+          description: element,
+          movie_id: movie.id,
+        });
       });
       return res
         .status(200)
@@ -111,8 +123,8 @@ class MoviesController {
     try {
       await database.Movies.restore({
         where: {
-          id: Number(movie_id)
-        }
+          id: Number(movie_id),
+        },
       });
       return res.status(200).send("Filme recuperado com sucesso!");
     } catch (error) {
@@ -120,21 +132,20 @@ class MoviesController {
     }
   }
 
-
   static async editMovie(req, res) {
     const { movie_id } = req.params;
     const newMovie = req.body;
     try {
       await database.Movies.update(newMovie, {
         where: {
-          id: Number(movie_id)
-        }
+          id: Number(movie_id),
+        },
       });
 
       const updatedMovie = await database.Movies.findOne({
         where: {
-          id: Number(movie_id)
-        }
+          id: Number(movie_id),
+        },
       });
       return res
         .status(200)
@@ -151,7 +162,6 @@ class MoviesController {
         where: {
           id: Number(movie_id),
         },
-
       });
       return res.status(200).send("Filme deletado com sucesso!");
     } catch (error) {
@@ -164,17 +174,15 @@ class MoviesController {
     try {
       await database.Movies.scope("forceDelete").destroy({
         where: {
-          id: Number(movie_id)
+          id: Number(movie_id),
         },
-        force: true
-      })
+        force: true,
+      });
       return res.status(200).send("Filme deletado com sucesso!");
     } catch (error) {
       return res.status(500).send(error.message);
     }
   }
-
 }
 
 module.exports = MoviesController;
-

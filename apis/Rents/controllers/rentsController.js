@@ -37,7 +37,8 @@ class RentsController {
       });
       if (!rentsPeople) {
         return res.status(404).send("Aluguel não existe.");
-      }f
+      }
+      f;
       return res.status(200).send(rentsPeople);
     } catch (error) {
       return res.status(500).send(error.message);
@@ -55,12 +56,14 @@ class RentsController {
       });
 
       if (verifyingRent) {
-        return res.send("O filme já está alugado! Alugue outro.", { verifyingRent });
+        return res.send("O filme já está alugado! Alugue outro.", {
+          verifyingRent,
+        });
       }
 
       const verifyingPeople = await database.People.findOne({
         where: {
-          id: people_id
+          id: people_id,
         },
       });
 
@@ -70,7 +73,7 @@ class RentsController {
 
       const verifyingMovie = await database.Movies.findOne({
         where: {
-          id: movie_id
+          id: movie_id,
         },
       });
 
@@ -79,9 +82,9 @@ class RentsController {
       }
 
       const rent = await database.Rents.create({
-          movie_id: movie_id,
-          people_id: people_id,
-          status: "Alugado!"
+        movie_id: movie_id,
+        people_id: people_id,
+        status: "Alugado!",
       });
 
       return res

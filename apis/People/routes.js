@@ -9,8 +9,9 @@ route.get("/people/:people_id", PeopleController.getOnePeople);
 route.get("/people", PeopleController.getAllPeople);
 
 // POST
-route.post("/people",PeopleController.createPeople);
+route.post("/create-people",PeopleController.createPeople);
 route.post("/people-restore/:people_id", restorePeople);
+
 // PUT
 route.put("/edit-people/:people_id", PeopleController.editPeople);
 
