@@ -24,12 +24,14 @@ class PeopleController {
       });
 
       if (!onePeople) {
-        return res.status(404).send("A pessoa não existe. Tente outro id.");
+        throw "A pessoa não existe. Tente outro id.";
       }
 
       return res.status(200).send(onePeople);
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).send({
+        Message: error,
+      });
     }
   }
 
@@ -38,17 +40,13 @@ class PeopleController {
     const isEmail = email ? validator.isEmail(email) : false;
     const salt = await bcrypt.genSalt(10);
     const newPassword = await bcrypt.hash(password, salt);
-    console.log(newPassword);
-    newPassword
-      ? await database.People.create({
-          name,
-          email,
-          role,
-          password: newPassword,
-        })
-      : console.log("Erro");
-
     try {
+      if (!isEmail) {
+        return res
+          .status(400)
+          .send({ msg: "E-mail não válido. Escreva novamente." });
+      }
+
       const verifyingPeople = await database.People.findOne({
         where: {
           email: email,
@@ -56,22 +54,18 @@ class PeopleController {
       });
 
       if (verifyingPeople) {
-        return res.send("A pessoa já está cadastrada.", { verifyingPeople });
-      }
-
-      if (!isEmail) {
-        return res.status(400).send("E-mail não válido. Escreva novamente.");
+        return res.status(400).send({ msg: "A pessoa já está cadastrada." });
       }
 
       const people = await database.People.create({
         name,
         email,
         role,
-        password,
+        password: newPassword,
       });
       return res
         .status(200)
-        .send({ msg: "Pessoa cadastrada com sucesso!", ...people });
+        .send({ msg: "Pessoa cadastrada com sucesso!", people });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -80,7 +74,7 @@ class PeopleController {
   static async restorePeople(req, res) {
     const { people_id } = req.params;
     try {
-      await database.peoples.restore({
+      await database.People.restore({
         where: {
           id: Number(people_id),
         },
@@ -93,7 +87,7 @@ class PeopleController {
     const { people_id } = req.params;
     const newPeople = req.body;
     try {
-      await database.peoples.update(newPeople, {
+      await database.People.update(newPeople, {
         where: {
           id: Number(people_id),
         },
@@ -106,7 +100,7 @@ class PeopleController {
       });
       return res
         .status(200)
-        .send({ message: "Pessoa atualizada com sucesso!", ...updatedPeople });
+        .send({ msg: "Pessoa atualizada com sucesso!", ...updatedPeople });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -120,7 +114,7 @@ class PeopleController {
           id: Number(people_id),
         },
       });
-      return res.status(200).send("Pessoa deletada com sucesso!");
+      return res.status(200).send({ msg: "Pessoa deletada com sucesso!" });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -135,7 +129,7 @@ class PeopleController {
         },
         force: true,
       });
-      return res.status(200).send("Pessoa deletada com sucesso!");
+      return res.status(200).send({ msg: "Pessoa deletada com sucesso!" });
     } catch (error) {
       return res.status(500).send(error.message);
     }

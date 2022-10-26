@@ -4,9 +4,17 @@ const Op = Sequelize.Op;
 class MoviesController {
   static async getAllMovies(req, res) {
     try {
-      const allMovies = await database.Movies.findAndCountAll({});
-      // const allMovies = await database.findAndCountAall({ include: Genres }); - > erro: Genres is not defined
-      return res.status(200).send(allMovies);
+      const countMovies = await database.Movies.count();
+      const allMovies = await database.Movies.findAll({
+        include: {
+          model: database.Genres,
+          attributes: ["description"],
+        },
+      });
+      return res.status(200).send({
+        "Total Movies": countMovies,
+        Movies: allMovies,
+      });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -21,7 +29,9 @@ class MoviesController {
         },
       });
       if (!movie) {
-        return res.status(404).send("O filme não existe. Tente outro id.");
+        return res
+          .status(404)
+          .send({ msg: "O filme não existe. Tente outro id." });
       }
 
       const genre = await database.Genres.findAll({
@@ -43,14 +53,17 @@ class MoviesController {
   static async getMoviesbyGenres(req, res) {
     const { genres } = req.body;
     try {
-      const movieGenres = await database.Movies.findAll({
+      const movieGenres = await database.Genres.findAll({
+        where: {
+          description: genres,
+        },
         include: [
           {
-            model: database.Genres,
-            where: {
-              description: genres,
+            model: database.Movies,
+            include: {
+              model: database.Genres,
+              attributes: ["description"],
             },
-            attributes: ["description"],
           },
         ],
       });
@@ -58,7 +71,9 @@ class MoviesController {
       if (movieGenres == 0) {
         throw "Não temos nenhum filme com esse gênero.";
       }
-      return res.status(200).send(movieGenres);
+      return res
+        .status(200)
+        .send(movieGenres.map((item) => item.dataValues.Movie));
     } catch (error) {
       return res.status(500).send({
         Message: error,
@@ -97,7 +112,7 @@ class MoviesController {
       });
 
       if (verifyingMovie) {
-        return res.send("O filme já está cadastrado.", { verifyingMovie });
+        return res.send({ msg: "O filme já está cadastrado." });
       }
       const movie = await database.Movies.create({
         title,
@@ -126,7 +141,7 @@ class MoviesController {
           id: Number(movie_id),
         },
       });
-      return res.status(200).send("Filme recuperado com sucesso!");
+      return res.status(200).send({ msg: "Filme recuperado com sucesso!" });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -134,24 +149,62 @@ class MoviesController {
 
   static async editMovie(req, res) {
     const { movie_id } = req.params;
-    const newMovie = req.body;
+    const { ...movieEdited } = req.body;
+    console.log(movieEdited);
     try {
-      await database.Movies.update(newMovie, {
+      const verifyingMovie = await database.Movies.findOne({
         where: {
-          id: Number(movie_id),
+          id: movie_id,
         },
       });
 
-      const updatedMovie = await database.Movies.findOne({
+      if (!verifyingMovie) {
+        return res.send({ msg: "O Filme não existe." });
+      }
+
+      await database.Movies.update(movieEdited, {
         where: {
-          id: Number(movie_id),
+          id: movie_id,
         },
       });
-      return res
-        .status(200)
-        .send({ msg: "Filme atualizado com sucesso!", ...updatedMovie });
+
+      return res.status(200).send({ msg: "Filme editado!" });
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).send({ msg: "Erro!!!!", error: error.message });
+    }
+  }
+
+  static async editGenre(req, res) {
+    const { movie_id, genre_id } = req.params;
+    const { description } = req.body;
+
+    const where = {
+      movie_id: movie_id,
+      id: genre_id,
+    };
+    try {
+      const result = await database.Genres.findOne({
+        where,
+      });
+
+      if (!result) {
+        return res
+          .status(404)
+          .send({ msg: "Gênero não encontrado. Tente outro." });
+      }
+
+      await database.Genres.update(
+        { description },
+        {
+          where,
+        }
+      );
+
+      return res.status(200).send({ msg: "Filme editado!" });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ msg: "Gênero não editado. Tente novamente." });
     }
   }
 
@@ -163,7 +216,7 @@ class MoviesController {
           id: Number(movie_id),
         },
       });
-      return res.status(200).send("Filme deletado com sucesso!");
+      return res.status(200).send({ msg: "Filme deletado com sucesso!" });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -172,14 +225,27 @@ class MoviesController {
   static async hardDeleteMovie(req, res) {
     const { movie_id } = req.params;
     try {
+      await database.Rents.destroy({
+        where: {
+          movie_id: movie_id,
+        },
+        force: true,
+      });
+      await database.Genres.destroy({
+        where: {
+          movie_id: movie_id,
+        },
+        force: true,
+      });
       await database.Movies.destroy({
         where: {
           id: Number(movie_id),
         },
         force: true,
       });
-      return res.status(200).send("Filme deletado com sucesso!");
+      return res.status(200).send({ msg: "Filme deletado com sucesso!" });
     } catch (error) {
+      console.log(error, "Erro!!!!");
       return res.status(500).send(error.message);
     }
   }

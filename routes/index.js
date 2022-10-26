@@ -1,9 +1,8 @@
 const peopleApi = require("../apis/People/routes");
 const moviesApi = require("../apis/Movies/routes");
 const rentsApi = require("../apis/Rents/routes");
-const user = require("../apis/Users/routes");
 
-const { createToken } = require("../apis/Users/services/auth.service");
+const { createToken } = require("../apis/People/services/auth.service");
 
 module.exports = (app) => {
   app.get("/locadora", (req, res) =>
@@ -13,5 +12,4 @@ module.exports = (app) => {
   app.use("/people-api", peopleApi);
   app.use("/movies-api", moviesApi);
   app.use("/rents-api", rentsApi);
-  app.use("/users-api", user);
 };

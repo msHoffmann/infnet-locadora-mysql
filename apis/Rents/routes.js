@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const route = Router();
 const rentsController = require("./controllers/rentsController");
-const { authMidEmployee } = require("../Users/services/auth.service");
+const { authMidEmployee } = require("../People/services/auth.service");
 
 // GET
 route.get("/rents", rentsController.getAllRents);
@@ -13,7 +13,10 @@ route.post("/rents/:people_id/movie/:movie_id", rentsController.createRent);
 
 // DELETE
 // pessoa devolveu um aluguel (rent)
-route.delete("/rents/rent-delete/:id", authMidEmployee, rentsController.deleteRent); 
+route.delete(
+  "/rents/rent-delete/:id",
+  authMidEmployee,
+  rentsController.deleteRent
+);
 
 module.exports = route;
-

@@ -7,13 +7,19 @@ class RentsController {
         include: [
           {
             model: database.Movies,
+            include: {
+              model: database.Genres,
+              attributes: ["description"],
+            },
           },
           {
             model: database.People,
           },
         ],
       });
-      return res.status(200).send(allRents);
+      return res.status(200).send({
+        Rents: allRents,
+      });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -32,14 +38,20 @@ class RentsController {
           },
           {
             model: database.Movies,
+            include: {
+              model: database.Genres,
+              attributes: ["description"],
+            },
           },
         ],
       });
       if (!rentsPeople) {
         return res.status(404).send("Aluguel não existe.");
       }
-      f;
-      return res.status(200).send(rentsPeople);
+      return res.status(200).send({
+        Rents: rentsPeople,
+        // Genres: allGenres,
+      });
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -51,7 +63,7 @@ class RentsController {
       const verifyingRent = await database.Rents.findOne({
         where: {
           movie_id: movie_id,
-          status: "Alugado!",
+          status: "Filme alugado! Divirta-se!",
         },
       });
 
@@ -84,7 +96,7 @@ class RentsController {
       const rent = await database.Rents.create({
         movie_id: movie_id,
         people_id: people_id,
-        status: "Alugado!",
+        status: "Filme alugado! Divirta-se!",
       });
 
       return res
