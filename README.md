@@ -5,8 +5,8 @@
     <img src="images/locadora.png" alt="Locadora de Filmes" />
   </a>
 
-API - Locadora de Filmes
-Bando de dados para cadastrar e administrar Filmes, Locadoras e Pessoas (clientes e funcionários) em uma Locadora.
+<h3 align="center">API - Locadora de Filmes</h3>
+Bando de dados para cadastrar e administrar Filmes, Locadoras e Pessoas (Clientes e Funcionários) em uma Locadora.
 <br />
 Vamos alugar um filme?
 
