@@ -46,7 +46,7 @@ class RentsController {
         ],
       });
       if (!rentsPeople) {
-        return res.status(404).send("Aluguel não existe.");
+        return res.status(404).send({ msg: "Aluguel não existe." });
       }
       return res.status(200).send({
         Rents: rentsPeople,

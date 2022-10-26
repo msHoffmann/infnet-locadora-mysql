@@ -69,7 +69,7 @@ class MoviesController {
       });
 
       if (movieGenres == 0) {
-        throw "Não temos nenhum filme com esse gênero.";
+        throw "Desculpe, não temos nenhum filme com esse gênero.";
       }
       return res
         .status(200)
