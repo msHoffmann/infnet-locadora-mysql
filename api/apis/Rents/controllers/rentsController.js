@@ -126,12 +126,3 @@ class RentsController {
 }
 
 module.exports = RentsController;
-
-// EXEMPLO
-// where: {
-//   id: 1, 2, 3
-// },
-// order:[
-//   ['id', 'DESC'],
-//   ['name', 'ASC']
-// ]

@@ -7,12 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       Movies.hasOne(models.Rents, {
         foreignKey: "movie_id",
       });
-      // (se tiver apenas 1 unidade do filme)
-
-      // Movies.hasMany(models.Rents, {
-      //   foreignKey: "rent_id"
-      // });
-      // (se tiver varias unidades do filme)
 
       Movies.hasMany(models.Genres, {
         foreignKey: "movie_id",
