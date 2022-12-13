@@ -6,7 +6,7 @@ const { authMidEmployee } = require("../People/services/auth.service");
 // GET
 route.get("/movies/:movie_id", moviesController.getOneMovie);
 route.get("/movies", moviesController.getAllMovies);
-route.get("/movies-genres", moviesController.getMoviesbyGenres);
+route.get("/movies-genres/:genre", moviesController.getMoviesbyGenres);
 route.get("/movies-title", moviesController.getMoviebyTitle);
 
 // POST

@@ -17,7 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       description: DataTypes.STRING,
-      year: DataTypes.NUMBER,
+      year: DataTypes.STRING,
+      image_url: DataTypes.STRING,
+      wallpaper_url: DataTypes.STRING,
+      voteAverage: DataTypes.FLOAT,
     },
     {
       sequelize,

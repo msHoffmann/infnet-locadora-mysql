@@ -51,11 +51,11 @@ class MoviesController {
   }
 
   static async getMoviesbyGenres(req, res) {
-    const { genres } = req.body;
+    const { genre } = req.params;
     try {
       const movieGenres = await database.Genres.findAll({
         where: {
-          description: genres,
+          description: genre,
         },
         include: [
           {
